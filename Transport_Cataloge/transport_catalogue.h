@@ -1,5 +1,5 @@
-// напишите решение с нуля
-// код сохраните в свой git-репозиторий
+//класс транспортного справочника
+#pragma once
 
 #include <deque>
 #include <string>
@@ -8,54 +8,110 @@
 #include <iostream>
 
 #include "geo.h"
+
 using namespace std;
 
 
-struct StopInfo{
+struct StopsInfo{
     string name;//назв.остановки
-    double latitude;//широта
-    double longitude;//долгота
+    double latitude=0;//широта
+    double longitude=0;//долгота
 };
 struct Route{
     int bus_number;// № маршрута
-    deque <StopInfo> stops;//список остановок
+    deque <string> stops;//список остановок
 };
 
 class TransportCataloge{
 private:
-    Route route_;
+    deque<Route> route_;//маршруты
+    deque <StopsInfo> all_stops_;//список всех известных остановок
 public:
-    void AddRoute(int number){
-        route_.bus_number=number;
-    }
 
-    void AddBusStop(const string &L_bus_name,const double &L_latitude,const double &L_longitude){
-        StopInfo L_stop_info;
-        L_stop_info.latitude=L_latitude;
-        L_stop_info.longitude=L_longitude;
-        L_stop_info.name=L_bus_name;
-        route_.stops.push_back(L_stop_info);
-    }
-    void GetRoute(int number_route){
-        if(number_route==route_.bus_number){
-            double L_length=0;
-            unordered_set <string> uniq_stop;
-            Coordinates last_coordinates;
-            Coordinates next_coordinates;
 
-            cout<<"Bus "s<<number_route<<": "s;
-            for(int i=0;route_.stops.size()>i;++i){
-                if(i!=0){
-                    last_coordinates.lat=route_.stops[i-1].latitude;
-                    last_coordinates.lng=route_.stops[i-1].longitude;
-                    next_coordinates.lat=route_.stops[i].latitude;
-                    next_coordinates.lng=route_.stops[i].longitude;
-                }
-                L_length=+ComputeDistance(last_coordinates,next_coordinates);
+    void AddBusRouteWithCircularRoute(string &L_stop_info){// создание кругового маршрута
+
+        string cash;
+        Route L_route;
+        for(int i=0;L_stop_info.size ()+1>i;++i){
+            char ch=L_stop_info[i];
+            if(ch==' '&&cash.empty ()){
+                continue;
+            }else if(ch==':'&&!cash.empty ()){
+                L_route.bus_number=stoi (cash);
+                cash.clear ();
+                continue;
+            }else if(ch=='>'){
+                L_route.stops.push_back (cash);
+                cash.clear ();
+                continue;
+            }else if(L_stop_info.size ()==i){
+                L_route.stops.push_back (cash);
+                route_.push_back (L_route);
+                cash.clear ();
+                break;
             }
-            cout<<route_.stops.size()<<" stops on route, "s<<uniq_stop.size()<<" unique stops, "s<<L_length<<" route length"s<<endl;
+            cash.push_back (ch);
         }
-    }
-};
 
-/*Bus 256: 6 stops on route, 5 unique stops, 4371.02 route length*/
+    }
+    void AddBusRouteWhithFinalStop(string &L_stop_info){
+
+        string cash;
+        Route L_route;
+        for(int i=0;L_stop_info.size ()+1>i;++i){
+            char ch=L_stop_info[i];
+            if(ch==' '&&cash.empty ()){
+                continue;
+            }else if(ch==':'&&!cash.empty ()){
+                L_route.bus_number=stoi (cash);
+                cash.clear ();
+                continue;
+            }else if(ch=='-'){
+                L_route.stops.push_back (cash);
+                cash.clear ();
+                continue;
+            }else if(L_stop_info.size ()==i){
+                L_route.stops.push_back (cash);
+                route_.push_back (L_route);
+                cash.clear ();
+                break;
+            }
+            cash.push_back (ch);
+        }
+
+    }
+    void AddStop(string &L_stop_info){//добавление остановок в список
+
+        string cash;
+        StopsInfo L_stop;
+        for(int i=0;L_stop_info.size ()+1>i;++i){
+            char ch=L_stop_info[i];
+            if(ch==' '&&cash.empty ()){
+                continue;
+            }else if(ch==':'&&!cash.empty ()){
+                L_stop.name=cash;
+                cash.clear ();
+                continue;
+            }else if(ch==','&&!cash.empty ()){
+                L_stop.latitude=stod (cash);
+                cash.clear ();
+                continue;
+            }else if(L_stop_info.size ()==i){
+                L_stop.longitude=stod(cash);
+                cash.clear ();
+                all_stops_.push_back (L_stop);
+                break;
+            }
+
+            cash.push_back (ch);
+        }
+
+
+    }
+    void GetBusRoute(string&L_stop_info){//получение значений маршрута
+
+    }
+
+
+};

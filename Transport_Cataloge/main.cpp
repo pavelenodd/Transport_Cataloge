@@ -1,5 +1,3 @@
-// напишите решение с нуля
-// код сохраните в свой git-репозиторий
 
 /*
 10
@@ -23,18 +21,20 @@ Bus 256: 6 stops on route, 5 unique stops, 4371.02 route length
 Bus 750: 5 stops on route, 3 unique stops, 20939.5 route length
 Bus 751: not found
 */
+#include<iostream>
+#include <string>
 
-#include <iostream>
-
-#include "stat_reader.h"
+#include "input_reader.h"
 #include "transport_catalogue.h"
 
 using namespace std;
 
-
-
 int main(){
 
+InputReader input_reader;
 TransportCataloge tr_cataloge;
+
+input_reader.GetQuery ();
+
 
 }
