@@ -5,9 +5,7 @@
 //: имени,
 //поиск остановки по имени,получение информации о маршруте.Методы
 //классаTransportCatalogue не должны выполнять никакого ввода -вывода.
-/*
- Tolstopaltsevo: 55.611087, 37.208290
-*/
+
 #pragma once
 
 #include <string>
@@ -27,12 +25,13 @@ struct StopCoordinate {
 };
 class TransportCatalogue {
  private:
+  //список остановок
   vector<StopCoordinate> stop_coordinates_;
 
  public:
   TransportCatalogue() {}
   ~TransportCatalogue() {}
-
+  //добавить остановку
   void AddBusStop(string &s) {
     StopCoordinate L_stop_coordinate;
     string L_stopname;
@@ -64,4 +63,10 @@ class TransportCatalogue {
     L_stop_coordinate.coordinate.lng = stod(L_lng);
     stop_coordinates_.push_back(L_stop_coordinate);
   }
+  //добавить круговой маршрут автобусу
+  void AddBussCircularRoute(string &s) {}
+  //добавть линейный маршрут автобусу
+  void AddBusLinerRoute(string &s) {}
+  //поиск автобуса
+  void GetRoute(string &s) {}
 };

@@ -1,6 +1,7 @@
 // напишите решение с нуля
 // input_reader.h, input_reader.cpp — чтение запросов на заполнение базы;
 #pragma once
+#include <algorithm>
 #include <iostream>
 #include <string>
 
@@ -26,8 +27,13 @@ class InputReader {
     if (comand == "Stop") {
       tr_cataloge_.AddBusStop(query);
     } else if (comand == "Bus") {
+      if (query.back() != query.find('-')) {
+        tr_cataloge_.AddBusLinerRoute(query);
+      } else if (query.back() != query.find('>')) {
+        tr_cataloge_.AddBussCircularRoute(query);
+      } else {
+        tr_cataloge_.GetRoute(query);
+      }
     }
   }
-
-  void GetDataRoute() {}
 };
