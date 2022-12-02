@@ -3,6 +3,8 @@
 *.cache
 *.vscode
 *build
+*main
+
 *~
 *.autosave
 *.a

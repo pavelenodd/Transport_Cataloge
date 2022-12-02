@@ -16,23 +16,25 @@ class InputReader {
  public:
   InputReader(TransportCatalogue L_tr_cataloge) {
     tr_cataloge_ = L_tr_cataloge;
+    InputRead();
   }
   ~InputReader() {}
 
   void InputRead() {
-    string query;
-    string comand;
-    cin >> comand;
-    getline(cin, query);
-    if (comand == "Stop") {
-      tr_cataloge_.AddBusStop(query);
-    } else if (comand == "Bus") {
-      if (query.back() != query.find('-')) {
-        tr_cataloge_.AddBusLinerRoute(query);
-      } else if (query.back() != query.find('>')) {
-        tr_cataloge_.AddBussCircularRoute(query);
-      } else {
-        tr_cataloge_.GetRoute(query);
+    int i = 0;
+    for (cin >> i; i > 0; --i) {
+      string query;
+      string comand;
+      cin >> comand;
+      getline(cin, query);
+      if (comand == "Stop") {
+        tr_cataloge_.AddBusStop(query);
+      } else if (comand == "Bus") {
+        if (count(query.begin(), query.end(), '-')) {
+          tr_cataloge_.AddBusLinerRoute(query);
+        } else if (count(query.begin(), query.end(), '>')) {
+          tr_cataloge_.AddBussCircularRoute(query);
+        }
       }
     }
   }
