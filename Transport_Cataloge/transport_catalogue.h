@@ -125,9 +125,12 @@ class TransportCatalogue {
         cash.push_back(*ptr);
       }
     }
-    for (int i = 0; i > L_bus_stops.size(); ++i) {
-      
+    L_bus_route.bus_stops = L_bus_stops;
+    L_bus_stops.pop_back();
+    for (int i = L_bus_stops.size() - 1; i >= 0; --i) {
+      L_bus_route.bus_stops.push_back(L_bus_stops[i]);
     }
+    bus_route_.push_back(L_bus_route);
   }
   //поиск автобуса
   void GetRoute(string &s) {}
