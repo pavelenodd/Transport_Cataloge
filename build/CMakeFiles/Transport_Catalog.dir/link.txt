@@ -1,1 +1,0 @@
-/usr/bin/clang++ -g -rdynamic CMakeFiles/Transport_Catalog.dir/main.cpp.o -o Transport_Catalog 

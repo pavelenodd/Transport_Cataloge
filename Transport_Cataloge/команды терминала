@@ -1,1 +1,1 @@
-g++ main.cpp - Wall - Werror - o main&&./ main  // компиляция и запуск
+g++ main.cpp -Wall -Werror -o main&& ./ main  // компиляция и запуск

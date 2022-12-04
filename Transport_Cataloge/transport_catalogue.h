@@ -10,9 +10,11 @@
 
 #include <iostream>
 #include <string>
-#include <unordered_map>
+#include <unordered_set>
 #include <utility>
 #include <vector>
+
+#include "geo.h"
 
 using namespace std;
 
@@ -20,14 +22,13 @@ struct Coordinate {
   double lat;
   double lng;
 };
-
-struct BusRoute {
-  int bus_nuber;
-  vector<string> bus_stops;
-};
 struct StopCoordinate {
   string StopName;
   Coordinate coordinate;
+};
+struct BusRoute {
+  int bus_nuber;
+  vector<StopCoordinate> bus_stops;
 };
 class TransportCatalogue {
  private:
@@ -73,75 +74,12 @@ class TransportCatalogue {
     stop_coordinates_.push_back(L_stop_coordinate);
   }
   //добавить круговой маршрут автобусу
-  void AddBussCircularRoute(string &s) {
-    BusRoute L_bus_route;
-    auto ptr = s.begin() + 1;
-    for (string cash; ptr != s.end(); ++ptr) {
-      if (*ptr == ':') {
-        L_bus_route.bus_nuber = stoi(cash);
-        ptr = ptr + 2;
-        break;
-      } else {
-        cash.push_back(*ptr);
-      }
-    }
-    for (string cash; ptr != s.end() + 1; ++ptr) {
-      if (*(ptr + 1) == '>') {
-        L_bus_route.bus_stops.push_back(cash);
-        cash.clear();
-        ptr = ptr + 2;
-      } else if (ptr == s.end()) {
-        L_bus_route.bus_stops.push_back(cash);
-        break;
-      } else {
-        cash.push_back(*ptr);
-      }
-    }
-    bus_route_.push_back(L_bus_route);
-  }
+  void AddBussCircularRoute(string &s) {}
   //добавть линейный маршрут автобусу
-  void AddBusLinerRoute(string &s) {
-    BusRoute L_bus_route;
-    vector<string> L_bus_stops;
-    auto ptr = s.begin() + 1;
-    for (string cash; ptr != s.end(); ++ptr) {
-      if (*ptr == ':') {
-        L_bus_route.bus_nuber = stoi(cash);
-        ptr = ptr + 2;
-        break;
-      } else {
-        cash.push_back(*ptr);
-      }
-    }
-    for (string cash; ptr != s.end() + 1; ++ptr) {
-      if (*(ptr + 1) == '-') {
-        L_bus_stops.push_back(cash);
-        cash.clear();
-        ptr = ptr + 2;
-      } else if (ptr == s.end()) {
-        L_bus_stops.push_back(cash);
-        break;
-      } else {
-        cash.push_back(*ptr);
-      }
-    }
-    L_bus_route.bus_stops = L_bus_stops;
-    L_bus_stops.pop_back();
-    for (int i = L_bus_stops.size() - 1; i >= 0; --i) {
-      L_bus_route.bus_stops.push_back(L_bus_stops[i]);
-    }
-    bus_route_.push_back(L_bus_route);
-  }
+  void AddBusLinerRoute(string &s) {}
   //поиск автобуса
   void GetRoute(int &L_bus_number) const {
-    int unic_stops;
-    double route_length;
-    for (auto L_bus_route:bus_route_) {
-      if(L_bus_route.bus_nuber==L_bus_number){
-        // Bus 256: 6 stops on route, 5 unique stops, 4371.02 route length
-        cout << "Bus " << L_bus_number << ": " << L_bus_route.bus_stops.size()
-             << " stops on route, "<<
-      }
+    // Bus 256 : 6 stops on route, 5 unique stops, 4371.02 route length
+    if(){}
     }
-  }
 };
