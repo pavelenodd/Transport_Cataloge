@@ -133,5 +133,15 @@ class TransportCatalogue {
     bus_route_.push_back(L_bus_route);
   }
   //поиск автобуса
-  void GetRoute(string &s) {}
+  void GetRoute(int &L_bus_number) const {
+    int unic_stops;
+    double route_length;
+    for (auto L_bus_route:bus_route_) {
+      if(L_bus_route.bus_nuber==L_bus_number){
+        // Bus 256: 6 stops on route, 5 unique stops, 4371.02 route length
+        cout << "Bus " << L_bus_number << ": " << L_bus_route.bus_stops.size()
+             << " stops on route, "<<
+      }
+    }
+  }
 };
